@@ -1,8 +1,8 @@
 version: '3.1'
 services:
-  postgres:
+  db-redmine:
     image: postgres:12-alpine
-    container_name: postgres
+    container_name: redmine-pgsql
     restart: always
     volumes:
     - ./pgsql:/var/lib/postgresql/data
@@ -16,9 +16,9 @@ services:
     container_name: redmine
 
     links:
-    - postgres:postgres
+    - db-redmine:redmine-pgsql
     depends_on:
-    - postgres
+    - db-redmine
 
     restart: always
     volumes:
@@ -27,6 +27,6 @@ services:
     ports:
       - 80:3000
     environment:      
-      - 'REDMINE_DB_POSTGRES=postgres'
+      - 'REDMINE_DB_POSTGRES=db-redmine'
       - 'REDMINE_DB_DATABASE=redmine'
       - 'REDMINE_DB_PASSWORD=password'
