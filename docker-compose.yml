@@ -5,8 +5,7 @@ services:
     container_name: redmine-pgsql
     restart: always
     volumes:
-    - ./pgsql:/var/lib/postgresql/data
-    
+    - ./pgsql:/var/lib/postgresql/data    
     environment:
       - 'TZ=America/Fortaleza'
       - 'POSTGRES_PASSWORD=password'
@@ -14,16 +13,13 @@ services:
   redmine:
     image: redmine:4.1.1
     container_name: redmine
-
     links:
     - db-redmine:redmine-pgsql
     depends_on:
     - db-redmine
-
     restart: always
     volumes:
     - ./redmine:/usr/src/redmine/files
-
     ports:
       - 80:3000
     environment:      
